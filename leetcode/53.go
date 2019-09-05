@@ -2,9 +2,11 @@
 
 link: https://leetcode.com/problems/maximum-subarray
 
-problem: 基础DP
+problem: 求序列nums的最长子串和
 
-solution: 基础DP，扫一遍完事
+solution: 
+dp[i]定义为以i结尾的子串的最大和，转移方程为：dp[i] = max(dp[i-1] + nums[i], nums[i])
+因为dp[i]只跟dp[i-1]关联，状态压缩一下不记录更早的值，扫一遍完事
 
 */
 
@@ -13,20 +15,16 @@ func maxSubArray(nums []int) int {
 		return 0
 	}
 	s, max := 0, nums[0]
-	empty := true
 	for i := range nums {
-		empty = false
-		s += nums[i]
-		if !empty && s > max {
+		if s < 0 {
+			s = nums[i]
+		} else {
+			s += nums[i]
+		}
+		if s > max {
 			max = s
 		}
-		if s <= 0 {
-			empty = true
-			s = 0
-		}
-	}
-	if !empty && s > max {
-		max = s
 	}
 	return max
 }
+
