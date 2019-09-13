@@ -10,6 +10,9 @@ dp[i][j] = (p[j] == '*' && dp[i][j-1])                    # '*' 匹配空值
          = (p[j] == '*' && dp[i-1][j])                    # '*' 匹配1+个任意字符
          = (p[j] == '*' && dp[i-1][j-1])                  # '*' 匹配1个任意字符
          = (p[j] == '?' || s[i] == p[j] && dp[i-1][j-1])  # ? 或其他字符精确匹配
+
+solution-fix: 剪枝搜索，"*" 是个很神奇的匹配，可以将模式串抽象成 p1*p2*p3*p4 这样的序列，多个连续"*"
+可以合并成一个，这时只需要确认s存在子序列 p1p2p3p4 即可
 """
 
 class Solution:
@@ -29,3 +32,26 @@ class Solution:
                         (dp[i - 1][j - 1] and (p[j] == '?' or s[i] == p[j])):
                     dp[i][j] = True
         return dp[ls][lp]
+
+# ---
+
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        i, j, confirm_j, pre_i = 0, 0, 0, 0
+        while not (i == len(s) and j == len(p)):
+            if i < len(s) and j < len(p) and (s[i] == p[j] or p[j] == '?'):
+                i += 1
+                j += 1
+            elif j < len(p) and p[j] == '*':
+                j += 1
+                pre_i = i
+                confirm_j = j
+            else:
+                if confirm_j == 0 or pre_i >= len(s):
+                    return False
+                j = confirm_j
+                i = pre_i + 1
+                pre_i = i
+        while j < len(p) and p[j] == '*':
+            j += 1
+        return i == len(s) and j == len(p)
