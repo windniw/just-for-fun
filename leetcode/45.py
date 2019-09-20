@@ -2,9 +2,9 @@
 
 link: https://leetcode.com/problems/jump-game-ii
 
-problem: 定义nums为，位于nums[k]，可跳到[k-nums[k],k+nums[k]]，为从0跳到n-1，至少需要几步
+problem: 定义nums为，位于nums[k]，可跳到[k-nums[k],k+nums[k]]，问从0跳到n-1，至少需要几步
 
-solution: 贪心，每次取所有当前决策中，下一步可到达最远的点，注意，不是这一次决策可到达的最远点
+solution: 55题的复杂版本。贪心，每次取所有当前决策中，下一步可到达最远的点，注意，不是这一次决策可到达的最远点
 """
 
 class Solution:
