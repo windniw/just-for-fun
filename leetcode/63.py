@@ -21,5 +21,4 @@ class Solution:
             dp[0] = dp[0] if obstacleGrid[i][0] != 1 else 0
             for j in range(1, m):
                 dp[j] = dp[j] + dp[j - 1] if obstacleGrid[i][j] != 1 else 0
-            debug(dp)
         return dp[m - 1]
