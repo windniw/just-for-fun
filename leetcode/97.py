@@ -8,6 +8,8 @@ solution: DP。定义 f[i][j] 为 s1[:i], s2[:j] 能否交错组成 s3[:i+j], �
           f[i][j] = f[i - 1][j] and s1[i - 1] == s3[i + j - 1] or \
             f[i][j - 1] and s2[j - 1] == s3[i + j - 1]
 
+solution-fix: 由转移公式可知，f[i][j]的状态仅与f[i-1][j], f[i][j-1] 有关，可进一步压缩空间用一维数组求解。
+
 """
 
 class Solution:
@@ -25,3 +27,18 @@ class Solution:
             for j in range(1, m + 1):
                 f[i][j] = f[i - 1][j] and s1[i - 1] == s3[i + j - 1] or f[i][j - 1] and s2[j - 1] == s3[i + j - 1]
         return f[n][m]
+
+# ---
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        n, m = len(s1), len(s2)
+        if n + m != len(s3) or collections.Counter(s1) + collections.Counter(s2) != collections.Counter(s3):
+            return False
+        f = [False for _ in range(m + 1)]
+        f[0] = True
+        for i in range(1, m + 1):
+            f[i] = f[i - 1] and s2[i - 1] == s3[i - 1]
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                f[j] = f[j] and s1[i - 1] == s3[i + j - 1] or f[j - 1] and s2[j - 1] == s3[i + j - 1]
+        return f[m]
