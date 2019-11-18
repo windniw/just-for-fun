@@ -6,6 +6,8 @@ problem: 对二叉树的每个节点补充 next 值，定义为在其右侧的�
 
 solution: 常数空间循环。利用next指针，按层向下做BFS。
 
+solution-fix: 常数空间循环。利用next指针，按层向下做BFS。使用dummy节点，减少了部分if逻辑判断。
+
 """
 """
 # Definition for a Node.
@@ -36,4 +38,22 @@ class Solution:
                         level = k.right
                     pre = k.right
                 k = k.next
+        return root
+# ---
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        level = root
+        while level:
+            k = level
+            dummy = Node()
+            tail = dummy
+            while k:
+                if k.left:
+                    tail.next = k.left
+                    tail = k.left
+                if k.right:
+                    tail.next = k.right
+                    tail = k.right
+                k = k.next
+            level = dummy.next
         return root
