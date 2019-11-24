@@ -22,3 +22,14 @@ class Solution:
             head.val = float("inf")
             head = head.next
         return False
+#---
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        if not head: return False
+        fast, slow = head.next, head
+        while fast and fast != slow:
+            slow = slow.next
+            fast = fast.next
+            if fast:
+                fast = fast.next
+        return fast == slow
