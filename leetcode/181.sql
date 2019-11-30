@@ -14,3 +14,9 @@ FROM
 WHERE 
     a.Salary > b.Salary 
     AND a.ManagerId = b.Id
+
+---
+SELECT a.Name as Employee
+FROM Employee a 
+LEFT JOIN Employee b ON a.ManagerId = b.Id 
+WHERE a.Salary > b.Salary 
