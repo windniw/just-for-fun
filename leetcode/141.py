@@ -6,6 +6,8 @@ problem: 判断链表中是否存在环
 
 solution: 遍历，置空
 
+solution-fix: 快慢指针
+
 """
 
 # Definition for singly-linked list.
