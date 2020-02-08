@@ -6,6 +6,8 @@ problem: 实现字典树
 
 solution: 每个节点独立成树结构，递归查找
 
+solution-fix: 直接以map形式嵌套存取，补充$为后缀符号标记字符串结束
+
 """
 class Trie:
 
@@ -42,3 +44,27 @@ class Trie:
 # param_3 = obj.startsWith(prefix)
 
 # ---
+class Trie:
+
+    def __init__(self):
+        self.tree = {}
+
+    def insert(self, word: str) -> None:
+        word += "$"
+        k = self.tree
+        for x in word:
+            if x not in k:
+                k[x] = {}
+            k = k[x]
+
+    def search(self, word: str) -> bool:
+        word += "$"
+        return self.startsWith(word)
+
+    def startsWith(self, prefix: str) -> bool:
+        k = self.tree
+        for x in prefix:
+            if x not in k:
+                return False
+            k = k[x]
+        return True
