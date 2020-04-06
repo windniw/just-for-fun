@@ -1,27 +1,13 @@
 """
 
-link: https://leetcode.com/problems/reverse-vowels-of-a-string
+link: https://leetcode.com/problems/top-k-frequent-elements
 
-problem: 翻转字符串中的元音字符，包括大小写
+problem: 求数组频率前k的元素，要求时间复杂度优于 O(nlogn)
 
-solution: 双指针扫，先转数组方便交换速度更快
+solution: 计算频率，遍历堆，抛出前k个元素，时间复杂度O(nlogk)
 
 """
-class Solution(object):
-    def reverseVowels(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        l, r, w, n, ss = 0, len(s) - 1, {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}, len(s), list(s)
-        while l < r:
-            while l < n and ss[l] not in w:
-                l += 1
-            while r >= 0 and ss[r] not in w :
-                r -= 1
-            if 0 <= l < r < n:
-                # s = s[:l] + s[r] + s[l + 1:r] + s[l] + s[r + 1:]
-                ss[l], ss[r] = ss[r], ss[l]
-                l += 1
-                r -= 1
-        return "".join(ss)
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = collections.Counter(nums)
+        return heapq.nlargest(k, count.keys(), count.get)
