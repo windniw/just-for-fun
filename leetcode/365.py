@@ -1,23 +1,14 @@
 """
 
-link: https://leetcode.com/problems/count-numbers-with-unique-digits
+link: https://leetcode.com/problems/water-and-jug-problem
 
-problem: 求 10**n 之内，每位数字不同的数字的位数
+problem: 有容量为 x,y 的两个水桶，问能否得到总和为 z 的水
 
-solution: 因为数字只有10个，显然 n 大于10没有意义。转换下问题变成求对每个长度k的数字求A(k,n)并去掉0开头的部分(即 1/10)
+solution: 数论。将问题转变为能否有 a,b 满足 ax + by = z，根据裴蜀定理，有解当且仅当 z 为 x, y 的最大公约数的整倍数。
 
 """
 class Solution:
-    def countNumbersWithUniqueDigits(self, n: int) -> int:
-        def f(k: int):
-            t = 1
-            while k:
-                t *= (11 - k)
-                k -= 1
-            t = t // 10 * 9
-            return t
-
-        res = 1
-        for i in range(1, n + 1):
-            res += f(i)
-        return res
+    def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+        if not x or not y:
+            return z == x or z == y
+        return x + y >= z and z % math.gcd(x, y) == 0
