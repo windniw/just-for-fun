@@ -6,6 +6,8 @@ problem: s, t 字符串差一个字符，求该字符
 
 solution: 丢进map里统计
 
+solution-fix: 用异或互消
+
 """
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
@@ -17,3 +19,13 @@ class Solution:
         for k in m:
             if m[k] != 0:
                 return k
+
+# ---
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        r = 0
+        for k in s:
+            r ^= ord(k)
+        for k in t:
+            r ^= ord(k)
+        return chr(r)
