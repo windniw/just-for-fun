@@ -6,6 +6,8 @@ problem: 对链表随机返回节点，要求 O(1) 级别的空间复杂度
 
 solution: 统计长度，随机位置
 
+solution-fix: 仅遍历一次，对当前第i个元素，有 1/i 的机率保留作为返回结果。需要多次随机，但只需要一次遍历。
+
 """
 # Definition for singly-linked list.
 # class ListNode:
@@ -37,9 +39,23 @@ class Solution:
             t -= 1
         return k.val
 
-        
-
-
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(head)
 # param_1 = obj.getRandom()
+
+# --- 
+class Solution:
+
+    def __init__(self, head: ListNode):
+        self.head = head
+
+    def getRandom(self) -> int:
+        k = self.head
+        res, n = k.val, 0
+        while k:
+            n += 1
+            if random.randint(1, n) == n:
+                res = k.val
+            k = k.next
+        return res
+
