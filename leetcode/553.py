@@ -6,6 +6,9 @@ problem: 给正整数数字数组，默认相除，添加任意括号使得表�
 
 solution: 递归枚举分割点。
 
+solution-fix: 注意到对所有元素均为正整数，越除肯定越小。有 a/(b/c) > (a/b)/c，
+              即被除数的最大值一定为nums[0], 除数的最小值为nums[1:]的连除
+
 """
 class Solution:
     def optimalDivision(self, nums: List[int]) -> str:
@@ -25,3 +28,11 @@ class Solution:
 
         _, t = f_max(nums, True)
         return t
+
+# ---
+class Solution:
+    def optimalDivision(self, nums: List[int]) -> str:
+        nums = [str(k) for k in nums]
+        if len(nums) == 1 or len(nums) == 2:
+            return "/".join(nums)
+        return nums[0] + "/" + "(" + "/".join(nums[1:]) + ")"
