@@ -2,7 +2,7 @@
 
 link: https://leetcode.com/problems/subarray-sum-equals-k
 
-problem: 求数组中是否存在字串满足其和为给定数字
+problem: 求数组中是否存在子串满足其和为给定数字，求满足条件子串数。
 
 solution: 记录前缀和。
 
