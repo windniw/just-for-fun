@@ -8,6 +8,8 @@ solution: 丢集合里存中间可能的和。
 
 solution-fix: 01背包。
 
+solution-fix-fix: 数据集较小，直接暴力+记忆化结果看起来还比dp要好 = =
+
 """
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
@@ -36,3 +38,23 @@ class Solution:
                 if i - k >= 0 and dp[i - k]:
                     dp[i] = True
         return dp[s // 2]
+
+#---
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+
+        @functools.lru_cache(maxsize=None)
+        def f(target: int, i: int) -> bool:
+            if target == 0:
+                return True
+            if target < 0:
+                return False
+            for j in range(i, n):
+                if f(target - nums[j], j + 1):
+                    return True
+            return False
+
+        s, n = sum(nums), len(nums)
+        if s & 1 != 0:
+            return False
+        return f(s // 2, 0)
