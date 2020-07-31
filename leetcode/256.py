@@ -2,7 +2,7 @@
 
 link: https://leetcode-cn.com/problems/paint-house
 
-problem: 给 n*3 的数组，每项选一个数字，相邻选中的列数不能一致
+problem: 给 n*3 的数组，每项选一个数字，相邻选中的列数不能一致，求最小和
 
 solution: DP
 
