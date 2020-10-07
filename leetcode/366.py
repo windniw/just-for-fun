@@ -6,6 +6,8 @@ problem: 从左向右依次移除树的叶节点，反复直至树为空，按�
 
 solution: 拓扑排序。将树视为图来处理，记每个子节点向其父节点存在有向边。
 
+solution-fix: 后序遍历。
+
 """
 # Definition for a binary tree node.
 # class TreeNode:
@@ -39,3 +41,23 @@ class Solution:
                         qq.append(kp)
             q = qq
         return res
+
+# ---
+class Solution:
+    def findLeaves(self, root: TreeNode) -> List[List[int]]:
+        res = []
+
+        def dfs(k: TreeNode) -> int:
+            if not k:
+                return 0
+            l, r = dfs(k.left) + 1, dfs(k.right) + 1
+            t = max(l, r)
+            if t > len(res):
+                res.append([k.val])
+            else:
+                res[t - 1].append(k.val)
+            return t
+
+        dfs(root)
+        return res
+
