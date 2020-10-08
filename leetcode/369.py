@@ -6,6 +6,8 @@ problem: 用链表记录大数，对其加一
 
 solution: 递归栈模拟。
 
+solution-fix: 快慢指针。寻找右边第一个不等于 9 的节点，对其加一，且对其之后连续的 9 置 0，省去栈存储空间。
+
 """
 # Definition for singly-linked list.
 # class ListNode:
@@ -33,3 +35,21 @@ class Solution:
             head = t
         return head
 
+# ---
+class Solution:
+    def plusOne(self, head: ListNode) -> ListNode:
+        t = ListNode(0)
+        t.next = head
+
+        add = t
+        while head:
+            if head.val != 9:
+                add = head
+            head = head.next
+
+        add.val += 1
+        head = add.next
+        while head and head.val == 9:
+            head.val = 0
+            head = head.next
+        return t if t.val != 0 else t.next
