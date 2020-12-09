@@ -6,6 +6,8 @@ problem: 求 [1, n] 的字典序中的第 k 大
 
 solution: dfs。计算每个前缀 prefix 在 [1, n] 中拥有多少个字符串，按字典序从小到大累加前缀字符串数量，当超过 k 时枚举下一位。
 
+solution-fix: 相同思路，计算每个前缀拥有的子串并从小自大累加。使用纯数字运算替代字符串搜索。
+
 """
 class Solution:
     def findKthNumber(self, n: int, k: int) -> int:
@@ -36,3 +38,28 @@ class Solution:
                 else:
                     cnt += c
         return int(prefix)
+
+# ---
+class Solution:
+    def findKthNumber(self, n: int, k: int) -> int:
+        def prefix_nums(prefix: int) -> int:
+            if prefix == 0:
+                return 0
+            cnt, prefix_next = 0, prefix + 1
+            while prefix <= n:
+                cnt += min(prefix_next, n + 1) - prefix
+                prefix *= 10
+                prefix_next *= 10
+            return cnt
+
+        cnt, prefix = 0, 0
+        while cnt != k:
+            for i in range(10):
+                c = prefix_nums(prefix * 10 + i)
+                if c + cnt >= k:
+                    cnt += 1
+                    prefix = prefix * 10 + i
+                    break
+                else:
+                    cnt += c
+        return prefix
